@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pwogram nou yo - Defi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            border: 3px dashed #6c757d;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            color: #6c757d;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo-placeholder:hover {
+            border-color: #0033A0;
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.05);
+        }
+
+        .header-text {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-text-area {
+            min-height: 120px;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+            color: black;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-text-area:hover {
+            border-color: #0033A0;
+            background: #ffffff;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #0033A0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .page-title .programs {
+            color: #CE1126;
+        }
+
+        /* Programs Grid */
+        .programs-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .program-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .program-title {
+            font-size: 1.5rem;
+            color: #0033A0;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #CE1126;
+            padding-bottom: 10px;
+        }
+
+        .program-text {
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+
+        .text-content {
+            color: black;
+            line-height: 1.7;
+        }
+
+        .text-placeholder {
+            min-height: 100px;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8f9fa;
+            color: black;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .text-placeholder:hover {
+            border-color: #0033A0;
+            background: #ffffff;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: #0033A0;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            color: #CE1126;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #0033A0 0%, #CE1126 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            align-self: center;
+            font-size: 1rem;
+        }
+
+        .enter-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* Support Modal */
+        .support-section {
+            margin: 60px auto 40px;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .support-modal {
+            background: linear-gradient(135deg, #0033A0 0%, #CE1126 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
+            100% { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+        }
+
+        .support-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .support-text {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .support-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .support-btn:hover {
+            background: white;
+            color: #0033A0;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0033A0 0%, #CE1126 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .programs-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .programs-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .program-card {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .logo-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .header-text-area {
+                min-height: 80px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .program-card {
+                padding: 15px;
+            }
+            
+            .program-title {
+                font-size: 1.3rem;
+            }
+            
+            .support-modal {
+                padding: 20px;
+            }
+            
+            .support-title {
+                font-size: 1.3rem;
+            }
+        }
+        .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #0033A0;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border: 2px solid #0033A0;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #0033A0;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+                <img src="images/logo.png" alt="logo.png" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
+
+        <a href="index-en.html" class="back-btn">← Back</a>
+        
+        <h1 class="page-title">
+            <span class="programs">Our</span> programs
+        </h1>
+        
+        <div class="header-text">
+            <div class="header-text-area">
+Each of our programs is connected to a series of issues present in the current education system.            </div>
+        </div>
+    </header>
+
+    <!-- Programs Grid -->
+    <div class="programs-container">
+        <div class="program-card">
+            <h2 class="program-title">Support for all students</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+We want to make a series of courses available to all students of all grades to help them better understand if they encounter difficulties in their regular schools. We also want to provide tools for parents to help their primary school children who cannot use the website.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Catch-up courses for 9th grade and NS4</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+These courses are special courses for all students taking the state exams. We want to help as many children as possible succeed.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Online school</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+To address the financial problems of many parents and the large number of schools destroyed recently, we want to set up a proper online school.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Educational media</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+This program was created with the aim of motivating students and giving them a taste for knowledge. We want to have a more serious ideological influence on the youth.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Other various courses for youth</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+In addition to the regular school courses, there are other skills that will greatly help young people.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Profesional courses</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+We want to provide young people with training so that they can access job opportunities after finishing school.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Philosophical courses</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+It is a free program open to everyone because we believe that philosophical and ideological training is very important in society.                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+
+        <div class="program-card">
+            <h2 class="program-title">Other programs coming soon</h2>
+            <div class="program-text">
+                <div class="text-placeholder">
+We are considering adding other programs that address other existing problems. We have some ideas such as literacy programs, psychological support for students and young people, and artistic activities for youth…                </div>
+            </div>
+            <button class="enter-btn" disabled>Enter</button>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div class="support-section">
+        <div class="support-modal">
+            <h3 class="support-title">We need your help</h3>
+            <p class="support-text">
+Please participate as a volunteer or make a donation to our project.            </p>
+            <a href="index-en.html#ede-nou" class="support-btn">Help us</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-text">
+            © 2025 Gramè Rezilyans - Our programs
+        </div>
+    </footer>
+
+    <script>
+        // Fonction pour gérer le "Voir plus/Voir moins"
+        function setupReadMore() {
+            const textContainers = document.querySelectorAll('.program-text');
+            
+            textContainers.forEach(container => {
+                const placeholder = container.querySelector('.text-placeholder');
+                if (placeholder) {
+                    // Pour les placeholders, on n'ajoute pas la fonctionnalité
+                    return;
+                }
+                
+                const textContent = container.querySelector('.text-content');
+                if (!textContent) return;
+                
+                const fullText = textContent.textContent;
+                const words = fullText.split(' ');
+                
+                if (words.length > 30) {
+                    const shortText = words.slice(0, 30).join(' ') + '...';
+                    let isExpanded = false;
+                    
+                    // Créer le bouton "Voir plus"
+                    const readMoreBtn = document.createElement('button');
+                    readMoreBtn.className = 'read-more-btn';
+                    readMoreBtn.textContent = 'Voir plus';
+                    
+                    // Afficher le texte court initialement
+                    textContent.textContent = shortText;
+                    container.appendChild(readMoreBtn);
+                    
+                    // Gérer le clic sur le bouton
+                    readMoreBtn.addEventListener('click', function() {
+                        if (!isExpanded) {
+                            textContent.textContent = fullText;
+                            readMoreBtn.textContent = 'Voir moins';
+                            isExpanded = true;
+                        } else {
+                            textContent.textContent = shortText;
+                            readMoreBtn.textContent = 'Voir plus';
+                            isExpanded = false;
+                        }
+                    });
+                }
+            });
+        }
+
+        // Fonction pour remplacer les placeholders par du vrai contenu
+        function addSampleContent() {
+            // Exemple de contenu pour tester la fonctionnalité "Voir plus"
+            const sampleTexts = [
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+                "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.",
+                // Vous pouvez ajouter d'autres exemples ici pour tester
+            ];
+            
+            // Remplacer quelques placeholders par du contenu d'exemple (optionnel pour les tests)
+            /*
+            const placeholders = document.querySelectorAll('.text-placeholder');
+            placeholders.forEach((placeholder, index) => {
+                if (index < sampleTexts.length) {
+                    const textContent = document.createElement('div');
+                    textContent.className = 'text-content';
+                    textContent.textContent = sampleTexts[index];
+                    placeholder.replaceWith(textContent);
+                }
+            });
+            */
+        }
+
+        // Animation d'entrée pour les cartes
+        function animateCards() {
+            const cards = document.querySelectorAll('.program-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            addSampleContent();
+            setupReadMore();
+            animateCards();
+        });
+    </script>
+</body>
+</html>

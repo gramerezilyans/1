@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramè Rezilyans - Nou pap janm abandone ledikasyon an Ayiti !</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo-placeholder {
+            width: 200px;
+            height: 200px;
+            border: 3px dashed #6c757d;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            color: #6c757d;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo-placeholder:hover {
+            border-color: #0033A0;
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.05);
+        }
+
+        /* Menu Hamburger */
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            width: 25px;
+            height: 20px;
+            justify-content: space-between;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            background: red;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Menu coulissant */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, #0033A0 0%, #CE1126 100%);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding-top: 80px;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu-items li {
+            margin: 0;
+        }
+
+        .menu-items a {
+            display: block;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .menu-items a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding-left: 40px;
+        }
+
+        /* Modales plein écran */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #CE1126;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .modal-close:hover {
+            background: #0033A0;
+            transform: scale(1.1);
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            color: #0033A0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #CE1126;
+            padding-bottom: 15px;
+        }
+
+        .modal-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-text-area {
+            min-height: 150px;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+            color: black;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .modal-text-area:hover {
+            border-color: #0033A0;
+            background: #ffffff;
+        }
+
+        .modal-subtitle {
+            font-size: 1.3rem;
+            color: #CE1126;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border: 3px dashed #6c757d;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            color: #6c757d;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-image:hover {
+            border-color: #0033A0;
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.02);
+        }
+
+        .main-title {
+            font-size: 8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-title .de {
+            color: #0033A0;
+        }
+
+        .main-title .fi {
+            color: #CE1126;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #495057;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #0033A0;
+            border-bottom: 3px solid #CE1126;
+            padding-bottom: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .text-area {
+            min-height: 150px;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+            color: black;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .text-area:hover {
+            border-color: #0033A0;
+            background: #ffffff;
+        }
+        
+        .language-selector {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    padding: 8px 12px;
+    border: 2px solid #0033A0;
+    background: transparent;
+    color: #0033A0;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active, .lang-btn:hover {
+    background: #0033A0;
+    color: white;
+}
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0033A0 0%, #CE1126 100%);
+            color: white;
+            text-align: center;
+            padding: 10px 5px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Styles pour les réseaux sociaux */
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 2px solid transparent;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles spécifiques YouTube */
+.social-link.youtube {
+    background: linear-gradient(45deg, #FF0000, #CC0000);
+    border-color: #FF0000;
+}
+
+.social-link.youtube:hover {
+    background: linear-gradient(45deg, #CC0000, #990000);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+/* Styles spécifiques Instagram */
+.social-link.instagram {
+    background: linear-gradient(45deg, #E4405F, #833AB4, #FCAF45);
+    border-color: #E4405F;
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(45deg, #C13584, #6B2AB7, #E09B42);
+    box-shadow: 0 5px 15px rgba(228, 64, 95, 0.4);
+}
+
+/* Icônes plus grandes */
+.social-icon {
+    font-size: 1.3rem;
+}
+
+/* Pour les modales */
+.modal .social-link {
+    color: #0033A0;
+    background: rgba(0, 51, 160, 0.1);
+    border: 2px solid #0033A0;
+}
+
+.modal .social-link:hover {
+    background: #0033A0;
+    color: white;
+}
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .main-title {
+                font-size: 5rem;
+            }
+            
+            .subtitle {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 2rem;
+                padding: 0 10px;
+            }
+            
+            .section {
+                padding: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-image {
+                height: 200px;
+            }
+            
+            .side-menu {
+                width: 250px;
+                right: -250px;
+            }
+            
+            .logo-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+
+            .modal-content {
+                padding: 80px 15px 40px;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .hero-image {
+                height: 150px;
+            }
+            
+            .text-area {
+                min-height: 100px;
+                padding: 15px;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-section {
+                padding: 15px;
+            }
+
+            .modal-text-area {
+                min-height: 80px;
+                padding: 15px;
+            }
+        }
+        
+        /* Pour tablette et plus petit */
+@media (max-width: 768px) {
+    .language-selector {
+        flex-direction: column;
+        gap: 8px;
+        top: 15px;
+        left: 15px;
+    }
+    
+    .lang-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        width: 40px;
+        text-align: center;
+    }
+}
+
+/* Pour mobile et plus petit */
+@media (max-width: 480px) {
+    .language-selector {
+        flex-direction: column;
+        gap: 5px;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .lang-btn {
+        padding: 5px 8px;
+        font-size: 0.8rem;
+        width: 70px;
+        text-align: center;
+        border-width: 1px;
+    }
+}
+
+/* Pour très petit mobile */
+@media (max-width: 360px) {
+    .language-selector {
+        top: 8px;
+        left: 8px;
+        gap: 3px;
+    }
+    
+    .lang-btn {
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        width: 80px;
+    }
+}
+    </style>
+    </head>
+<body>
+    <!-- Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleMenu()">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </button>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" onclick="closeMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu">
+        <ul class="menu-items">
+            <li><a onclick="openModal('kreye-kont'); closeMenu();">Sign up</a></li>
+            <li><a href="pwogram-en.html" onclick="closeMenu()">Our programs</a></li>
+            <li><a onclick="openModal('kisa-Gramè'); closeMenu();">What is Gramè Rezilyans?</a></li>
+            <li><a href="foto.html" onclick="closeMenu()">Pictures</a></li>
+            <li><a onclick="openModal('ede-nou'); closeMenu();">Help us</a></li>
+            <li><a onclick="openModal('kontak'); closeMenu();">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Modales -->
+    <!-- Modal Kreye kont -->
+    <div id="kreye-kont" class="modal">
+        <button class="modal-close" onclick="closeModal('kreye-kont')">&times;</button>
+        <div class="modal-content">
+            <h1 class="modal-title">Account</h1>
+            
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Type of accounts on Gramè Rezilyans?</h3>
+                <div class="modal-text-area">
+                You can have a student account, a university student account, or a supporter member account of Gramè Rezilyans.
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">When will this feature be available?</h3>
+                <div class="modal-text-area">
+                We plan to pay for a database service to host all the accounts we will have on the platform. This feature will be available very soon. You can help us speed up the process with technical or financial support.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kisa Gramè Rezilyans ye -->
+    <div id="kisa-Gramè" class="modal">
+        <button class="modal-close" onclick="closeModal('kisa-Gramè')">&times;</button>
+        <div class="modal-content">
+            <h1 class="modal-title">What is Gramè Rezilyans?</h1>
+            
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Our mission</h3>
+                <div class="modal-text-area">
+The mission of Gramè Rezilyans is always to identify the real problems related to education in Haiti and to seek solutions. We are a grassroots organization, we do not rely on the intervention of the State or other institutions to take action.
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Our vision</h3>
+                <div class="modal-text-area">
+Our vision is to have a meaningful impact on education in Haiti and to help many students and young people who are facing numerous challenges in their learning.                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Our values</h3>
+                <div class="modal-text-area">
+We have an ideological orientation based on dialectical materialist philosophy. Therefore, we believe in emancipation, in the power of children and young people to bring about meaningful change in the system. We also believe in each individual and in their potential to surpass themselves and to become more than what they are today.                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ede nou -->
+    <div id="ede-nou" class="modal">
+        <button class="modal-close" onclick="closeModal('ede-nou')">&times;</button>
+        <div class="modal-content">
+            <h1 class="modal-title">Help us</h1>
+            
+            <div class="modal-section">
+                <h3 class="modal-subtitle">How to help us?</h3>
+                <div class="modal-text-area">
+There are two ways you can help us. Either you volunteer in different roles within our project using your skills, or you make a donation during our fundraising campaigns. We are not encouraging you to help us; we are encouraging you to help the students and young people in Haiti.   
+</div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Become a volunteer</h3>
+                <div class="modal-text-area">
+We currently have no limits on the available positions. Furthermore, as we grow, volunteer positions may eventually become paid positions.
+Write to us at our email address. Send your CV along with a short text explaining how you can help us:
+📧 gramerezilyans@gmail.com                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Donations</h3>
+                <div class="modal-text-area">
+To make a donation during our fundraising campaigns, check our Instagram page for all updates and informations.                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Partnership opportunity</h3>
+                <div class="modal-text-area">
+If you are an organization and want to help us or partner with us, please write to us at our email address: gramerezilyans@gmail.com
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Kontak -->
+    <div id="kontak" class="modal">
+        <button class="modal-close" onclick="closeModal('kontak')">&times;</button>
+        <div class="modal-content">
+            <h1 class="modal-title">Contact</h1>
+            
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Phone number</h3>
+                <div class="modal-text-area">
+                    50934125103 / 50935765362
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3 class="modal-subtitle">Email adress</h3>
+                <div class="modal-text-area">
+                    gramerezilyans@gmail.com
+                </div>
+            </div>
+             <!-- NOUVELLE SECTION RÉSEAUX SOCIAUX -->
+        <div class="modal-section">
+            <h3 class="modal-subtitle">Our social media</h3>
+            <div style="text-align: center; padding: 20px;">
+                <a href="https://youtube.com/@gramerezilyans?si=7dA5Znx6mpqtrKmv" target="_blank" class="social-link" style="margin: 10px;">
+                    📺 YouTube
+                </a>
+                <a href="https://www.instagram.com/gramerezilyans?igsh=YzljYTk1ODg3Zg==" target="_blank" class="social-link" style="margin: 10px;">
+                    📱 Instagram
+                </a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <img src="images/logo.png" alt="logo.png" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;">
+        </div>
+    </header>
+    
+    <div class="language-selector">
+    <a href="index-fr.html" class="lang-btn">Français</a>
+    <a href="index-en.html" class="lang-btn active">English</a>
+    <a href="index.html" class="lang-btn">Kreyòl</a>
+</div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="images/image-hero.png" alt="Image principale" style="width: 100%; max-width: 600px; height: 300px; border-radius: 10px; object-fit: cover;">
+        
+        <h1 class="main-title">
+            <span class="de">Gramè</span> <span class="fi">Rezilyans</span>
+        </h1>
+        
+        <p class="subtitle">
+            We will never give up on education in Haiti.
+        </p>
+    </section>
+
+    <!-- Content Sections -->
+    <div class="content-section">
+        <section class="section">
+            <h2 class="section-title">What is Gramè Rezilyans?</h2>
+            <div class="text-area">
+Gramè Rezilyans is an initiative set up by a group of young people to address all the problems in the current Haitian educational system. We are a 100% online platform aiming to tackle issues where children lose many school days, programs are never truly followed, and most students fail the state exams… We want to help children, who are the future of the country.   
+</div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Why Gramè Rezilyans ?</h2>
+            <div class="text-area">
+The mission of Gramè Rezilyans is to deliver a message of hope despite all the real problems in society. We do not aim to change these problems because we cannot. Our goal is to invest in children, in the quality of awareness they have of themselves and the society they live in.   
+</div>
+        </section>
+        
+            <section class="section">
+            <h2 class="section-title">What are the projects and programs of Gramè Rezilyans?</h2>
+            <div class="text-area">
+The most important programs and projects of Gramè Rezilyans include offering online catch-up courses for 9th grade and NS4 students preparing for state exams, a series of support courses for all grades, providing 100% online certified training, creating a 100% educational media platform, organizing numerous educational activities to genuinely motivate young people to learn, and offering a series of free courses on dialectical materialism, which is the ideological orientation of this platform. The programs will always be either free or low-cost.            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-text">
+                © 2025 - Gramè Rezilyans
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sideMenu = document.querySelector('.side-menu');
+            const overlay = document.querySelector('.menu-overlay');
+            
+            menuToggle.classList.toggle('active');
+            sideMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Empêcher le scroll du body quand le menu est ouvert
+            if (sideMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sideMenu = document.querySelector('.side-menu');
+            const overlay = document.querySelector('.menu-overlay');
+            
+            menuToggle.classList.remove('active');
+            sideMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermer le menu avec Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMenu();
+                // Fermer toutes les modales ouvertes
+                const activeModals = document.querySelectorAll('.modal.active');
+                activeModals.forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Animation d'entrée pour les sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.6s ease';
+                section.style.transitionDelay = `${index * 0.2}s`;
+            });
+            
+            // Déclencher l'animation après un court délai
+            setTimeout(() => {
+                sections.forEach(section => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                });
+            }, 300);
+        });
+        
+        // Ouvrir la modale si l'URL contient #ede-nou
+window.addEventListener('load', function() {
+    if (window.location.hash === '#ede-nou') {
+        openModal('ede-nou');
+    }
+});
+    </script>
+</body>
+</html>
